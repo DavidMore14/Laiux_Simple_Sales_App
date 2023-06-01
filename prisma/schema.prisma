@@ -17,3 +17,19 @@ model User {
   password String @db.VarChar(255)
   firstName String @db.VarChar(255) @map("first_name")
 }
+
+model Product {
+  id Int @id @default(autoincrement())
+  name String @unique
+  quantity Int @default(0)
+  price Int @default(999)
+  createdAt DateTime @default(now())
+  category Category @relation(fields: [categoryId], references: [id])
+  categoryId Int
+}
+
+model Category {
+  id Int @id @default(autoincrement())
+  name String @unique
+  products Product[]
+}
