@@ -5,23 +5,24 @@ import { PrismaClient, Prisma } from "@prisma/client";
 export default async (req: NextApiRequest, res: NextApiResponse) => {
     const prisma = new PrismaClient()
     if (req.method === 'GET') {
-        const users = await prisma.product.findMany();
-        res.json(users);
+        const products = await prisma.product.findMany();
+        res.json(products);
     }else if( req.method === 'POST'){
-        const { name, quantity, price, categoryId} = req.body;
+        const { name, quantity, price, categoryId, categoryName} = req.body;
         let newProduct: Prisma.ProductCreateInput = {
             name,
             quantity,
             price,
             category:{
                 connect: {
-                    id: categoryId
+                    id: categoryId,
+                    name: categoryName
                 }
             }
         };
-        const user = await prisma.product.create({
+        const createdProduct = await prisma.product.create({
             data: newProduct,
         });
-        res.json(user);
+        res.json(createdProduct);
     }
 }

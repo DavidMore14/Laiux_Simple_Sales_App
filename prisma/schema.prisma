@@ -24,6 +24,8 @@ model Product {
   quantity Int @default(0)
   price Int @default(999)
   createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  deletedAt DateTime @default(now())
   category Category @relation(fields: [categoryId], references: [id])
   categoryId Int
 }
