@@ -8,12 +8,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         const categ = await prisma.category.findMany();
         res.json(categ);
     }else if( req.method === 'POST'){
-        const { name} = req.body;
-        let newCategory: Prisma.CategoryCreateInput = {
-            name
-        };
+        const {name} = req.body;
         const cat = await prisma.category.create({
-            data: newCategory,
+            data: {name},
         });
         res.json(cat);
     }
